@@ -7,6 +7,7 @@ public class Particule : MonoBehaviour
     // Start is called before the first frame update
 
     public Parti Stats;
+    public float Life;
     
     void Start()
     {
@@ -19,6 +20,7 @@ public class Particule : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Life += Time.deltaTime;
         if(Stats.Lifeline<=0)
         {
             Destroy(gameObject);
@@ -27,6 +29,7 @@ public class Particule : MonoBehaviour
             Stats.Lifeline -= Time.deltaTime;
             
         }
+        GetComponent<SpriteRenderer>().color = Color.Lerp(Stats.Col, Stats.ColLerp, Life/Stats.SpeedColor);
     }
 }
 
@@ -34,6 +37,8 @@ public class Particule : MonoBehaviour
 public struct Parti
 {
     public Color Col;
+    public Color ColLerp;
+    public float SpeedColor;
     public float Direction;
     public float Speed;
     public float Lifeline;
