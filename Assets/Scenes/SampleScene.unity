@@ -388,11 +388,11 @@ MonoBehaviour:
   resWidth: 400
   resHeight: 400
   ScreenPerSec: 30
-  RecordTime: 2
+  RecordTime: 1
   ScreenDelay: 0
-  Go: 1
+  Go: 0
   Save: 0
-  DiviSpeed: 2
+  DiviSpeed: 1
   Count: 0
 --- !u!4 &1603293622
 Transform:

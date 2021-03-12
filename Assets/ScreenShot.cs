@@ -30,7 +30,7 @@ public class ScreenShot : MonoBehaviour
         return string.Format(name.ToString() + ".png", Application.dataPath, width, height, "Screen");
     }
 
-    void LateUpdate()
+    void Update()
     {
         if(Go)
         {
@@ -50,7 +50,7 @@ public class ScreenShot : MonoBehaviour
                     Destroy(rt);
                     byte[] bytes = screenShot.EncodeToPNG();
                     ListByte.Add(bytes);
-                    ScreenDelay = ScreenDelaySet;
+                    ScreenDelay += ScreenDelaySet;
                     Count += 1;
                 }
                 ScreenDelay -= Time.deltaTime;
