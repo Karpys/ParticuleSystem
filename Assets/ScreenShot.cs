@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class ScreenShot : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class ScreenShot : MonoBehaviour
     public float DiviSpeed;
     public int Count;
     private float ScreenDelaySet;
-
+    public string AnimName;
     void Start()
     {
         GlobalVariable.SpeedDivi = DiviSpeed;
@@ -25,7 +26,7 @@ public class ScreenShot : MonoBehaviour
         ScreenDelaySet = ScreenDelay;
     }
 
-    public string ScreenShotName(int width, int height,int name)
+    public string ScreenShotName(int width, int height, int name)
     {
         return string.Format(name.ToString() + ".png", Application.dataPath, width, height, "Screen");
     }
@@ -60,10 +61,11 @@ public class ScreenShot : MonoBehaviour
 
         if(Save)
         {
-            for (int i=0;i<ListByte.Count;i++)
+            var folder = Directory.CreateDirectory(Application.dataPath +"/../Test/"+AnimName+"/");
+            for (int i = 0; i < ListByte.Count; i++)
             {
-            string filename = ScreenShotName(resWidth, resHeight,i);
-            System.IO.File.WriteAllBytes(filename, ListByte[i]);
+                /*string filename = ScreenShotName(resWidth, resHeight, i);*/
+                System.IO.File.WriteAllBytes(Application.dataPath + "/../Test/" + AnimName + "/" + i.ToString() + ".png", ListByte[i]);
             }
             Save = false;
         }

@@ -12,7 +12,7 @@ public class Particule : MonoBehaviour
     void Start()
     {
         GetComponent<SpriteRenderer>().color = Stats.Col;
-        float degree = Mathf.Deg2Rad * Random.Range(0,Stats.Direction);
+        float degree = Mathf.Deg2Rad * Random.Range(Stats.Direction.x, Stats.Direction.y);
         Vector2 Dir = new Vector2(Mathf.Cos(degree), Mathf.Sin(degree));
         GetComponent<Rigidbody2D>().AddForce(Dir * Stats.Speed / GlobalVariable.SpeedDivi);
     }
@@ -39,7 +39,7 @@ public struct Parti
     public Color Col;
     public Color ColLerp;
     public float SpeedColor;
-    public float Direction;
+    public Vector2 Direction;
     public float Speed;
     public float Lifeline;
 }
