@@ -8,19 +8,24 @@ public class Particule : MonoBehaviour
 
     public Parti Stats;
     public float Life;
+    public Vector3 Acc;
+    
     
     void Start()
     {
         GetComponent<SpriteRenderer>().color = Stats.Col;
         float degree = Mathf.Deg2Rad * Random.Range(Stats.Direction.x, Stats.Direction.y);
-        Vector2 Dir = new Vector2(Mathf.Cos(degree), Mathf.Sin(degree));
-        GetComponent<Rigidbody2D>().AddForce(Dir * Stats.Speed / GlobalVariable.SpeedDivi);
+        Acc = new Vector2(Mathf.Cos(degree), Mathf.Sin(degree));
     }
 
     // Update is called once per frame
     void Update()
     {
         Life += Time.deltaTime;
+        Stats.Speed += Stats.Acceleration;
+        Vector3 V = Acc * Stats.Speed+ Stats.Gravity;
+        V *= Time.deltaTime;
+        transform.position = transform.position + V;
         if(Stats.Lifeline<=0)
         {
             Destroy(gameObject);
@@ -42,4 +47,6 @@ public struct Parti
     public Vector2 Direction;
     public float Speed;
     public float Lifeline;
+    public float Acceleration;
+    public Vector3 Gravity;
 }

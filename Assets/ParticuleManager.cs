@@ -7,6 +7,7 @@ public class ParticuleManager : MonoBehaviour
     // Start is called before the first frame update
     public GameObject PrefabParticule;
     public Parti ParticuleStats;
+    public GameObject Parent;
     void Start()
     {
         
@@ -17,9 +18,17 @@ public class ParticuleManager : MonoBehaviour
     {
         for(int i=0;i<2; i++)
         {
-
-            GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
-            Obj.GetComponent<Particule>().Stats = ParticuleStats;
+            if(Parent)
+            {
+                GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation,Parent.transform);
+                Obj.GetComponent<Particule>().Stats = ParticuleStats;
+            }
+            else
+            {
+                GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
+                Obj.GetComponent<Particule>().Stats = ParticuleStats;
+            }
+            
         }
     }
 }
