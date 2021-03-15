@@ -8,27 +8,39 @@ public class ParticuleManager : MonoBehaviour
     public GameObject PrefabParticule;
     public Parti ParticuleStats;
     public GameObject Parent;
+    public int NbrEmmiter;
+    public float DelayEmmit;
+    public float DelayEmmitSet;
     void Start()
     {
-        
+        DelayEmmitSet = DelayEmmit;
+        DelayEmmit = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        for(int i=0;i<2; i++)
+        if(DelayEmmit<=0)
         {
-            if(Parent)
+            for(int i=0;i< NbrEmmiter; i++)
             {
-                GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation,Parent.transform);
-                Obj.GetComponent<Particule>().Stats = ParticuleStats;
-            }
-            else
-            {
-                GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
-                Obj.GetComponent<Particule>().Stats = ParticuleStats;
-            }
+                if(Parent)
+                {
+                    GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation,Parent.transform);
+                    Obj.GetComponent<Particule>().Stats = ParticuleStats;
+                }
+                else
+                {
+                    GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
+                    Obj.GetComponent<Particule>().Stats = ParticuleStats;
+                }
             
+            }
+            DelayEmmit = DelayEmmitSet;
+        }
+        if(DelayEmmit>0)
+        {
+        DelayEmmit -= Time.deltaTime;
         }
     }
 }
