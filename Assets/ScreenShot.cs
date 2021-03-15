@@ -21,7 +21,6 @@ public class ScreenShot : MonoBehaviour
     void Start()
     {
         GlobalVariable.SpeedDivi = DiviSpeed;
-        Debug.Log("cc");
         ScreenDelay = 1 / (float)ScreenPerSec;
         ScreenDelaySet = ScreenDelay;
     }
