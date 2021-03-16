@@ -47,8 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stats:
     Col: {r: 0, g: 0, b: 0, a: 0}
-    Direction: 0
+    ColLerp: {r: 0, g: 0, b: 0, a: 0}
+    SpeedColor: 0
+    Direction: {x: 0, y: 0}
     Speed: 0
+    Lifeline: 0
+    Acceleration: 0
+    Gravity: {x: 0, y: 0, z: 0}
+    sprite: {fileID: 21300000, guid: f445841ff7fdc0347931d462d9ed9b94, type: 3}
+  Life: 0
+  Acc: {x: 0, y: 0, z: 0}
 --- !u!50 &7845861265785728504
 Rigidbody2D:
   serializedVersion: 4

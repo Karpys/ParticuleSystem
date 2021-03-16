@@ -13,9 +13,11 @@ public class Particule : MonoBehaviour
     
     void Start()
     {
+        GetComponent<SpriteRenderer>().sprite = Stats.sprite;
         GetComponent<SpriteRenderer>().color = Stats.Col;
         float degree = Mathf.Deg2Rad * Random.Range(Stats.Direction.x, Stats.Direction.y);
         Acc = new Vector2(Mathf.Cos(degree), Mathf.Sin(degree));
+        transform.localScale = new Vector3(Stats.Scale, Stats.Scale, Stats.Scale);
     }
 
     // Update is called once per frame
@@ -49,4 +51,6 @@ public struct Parti
     public float Lifeline;
     public float Acceleration;
     public Vector3 Gravity;
+    public Sprite sprite;
+    public float Scale;
 }
