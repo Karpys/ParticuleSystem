@@ -9,35 +9,56 @@ public class Particule : MonoBehaviour
     public Parti Stats;
     public float Life;
     public Vector3 Acc;
+    public float Counter;
+    public float CounterAcc;
+    public float CounterSpeed;
+    public float Round;
+    public Vector3 V;
+    public float NbrRound;
+    
     
     
     void Start()
     {
+        NbrRound = Stats.Lifeline / Time.fixedDeltaTime;
         GetComponent<SpriteRenderer>().sprite = Stats.sprite;
-        GetComponent<SpriteRenderer>().color = Stats.Col;
-        float degree = Mathf.Deg2Rad * Random.Range(Stats.Direction.x, Stats.Direction.y);
-        Acc = new Vector2(Mathf.Cos(degree), Mathf.Sin(degree));
+        GetComponent<SpriteRenderer>().color = Stats.Col;      
+        Acc = new Vector2(Mathf.Cos(Stats.degree), Mathf.Sin(Stats.degree));
         transform.localScale = new Vector3(Stats.Scale, Stats.Scale, Stats.Scale);
+        if(Stats.Reverse)
+        {
+            float MagnitudeSpeed = (Stats.Speed + Stats.Acceleration*NbrRound/2) * NbrRound;
+            transform.position += Acc * MagnitudeSpeed  *Time.fixedDeltaTime;
+
+        }
+        /*Debug.Log(0.5f + zou);*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        Life += Time.deltaTime;
-        Stats.Speed += Stats.Acceleration;
-        Vector3 V = Acc * Stats.Speed+ Stats.Gravity;
-        V *= Time.deltaTime;
-        transform.position = transform.position + V;
         if(Stats.Lifeline<=0)
         {
             Destroy(gameObject);
-        }else
-        {
-            Stats.Lifeline -= Time.deltaTime;
-            
         }
         GetComponent<SpriteRenderer>().color = Color.Lerp(Stats.Col, Stats.ColLerp, Life/Stats.SpeedColor);
     }
+    public void FixedUpdate()
+    {
+        Life += Time.fixedDeltaTime;
+        Stats.Lifeline -= Time.fixedDeltaTime;
+        Stats.Speed += Stats.Acceleration;
+        V = Acc * Stats.Speed + Stats.Gravity;
+        V *= Time.fixedDeltaTime;
+        Round += 1;
+        Counter += V.magnitude;
+        if (Stats.Reverse)
+        {
+            V = -V;
+        }
+        transform.position = transform.position + V;
+    }
+
 }
 
 [System.Serializable]
@@ -53,4 +74,25 @@ public struct Parti
     public Vector3 Gravity;
     public Sprite sprite;
     public float Scale;
+    public float degree;
+    public bool Reverse;
+}
+[System.Serializable]
+public struct Loop
+{
+    public bool IsLooping;
+    public float TimeBeforeLoop;
+    public float LoopTime;
+    public bool Stack;
+    public bool Release;
+    public LoopPhase Phase;
+    public int index;
+}
+
+public enum LoopPhase
+{
+    NOTHING,
+    BEFORELOOP,
+    RECORD,
+    DISPLAY,
 }

@@ -11,6 +11,8 @@ public class ParticuleManager : MonoBehaviour
     public int NbrEmmiter;
     public float DelayEmmit;
     public float DelayEmmitSet;
+    public List<Parti> ListParticuleForLoop;
+    public Loop LoopOption;
     void Start()
     {
         DelayEmmitSet = DelayEmmit;
@@ -22,22 +24,78 @@ public class ParticuleManager : MonoBehaviour
     {
         if(DelayEmmit<=0)
         {
-            for(int i=0;i< NbrEmmiter; i++)
+            if(LoopOption.IsLooping==false || LoopOption.Phase==LoopPhase.BEFORELOOP || LoopOption.Phase==LoopPhase.RECORD)
             {
-                if(Parent)
+                for(int i=0;i< NbrEmmiter; i++)
                 {
-                    GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation,Parent.transform);
-                    Obj.GetComponent<Particule>().Stats = ParticuleStats;
+                    if(Parent)
+                    {
+                        GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation,Parent.transform);
+                        ParticuleStats.degree = Mathf.Deg2Rad * Random.Range(ParticuleStats.Direction.x, ParticuleStats.Direction.y);
+                        Obj.GetComponent<Particule>().Stats = ParticuleStats;
+                    
+                    }
+                    else
+                    {
+                        GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
+                        ParticuleStats.degree = Mathf.Deg2Rad * Random.Range(ParticuleStats.Direction.x, ParticuleStats.Direction.y);
+                        Obj.GetComponent<Particule>().Stats = ParticuleStats;
+                        if(LoopOption.Phase == LoopPhase.RECORD)
+                        {
+                            ListParticuleForLoop.Add(ParticuleStats);
+                        }
+                        
+                    }
                 }
-                else
+                DelayEmmit = DelayEmmitSet;
+            }
+            else if(LoopOption.Phase==LoopPhase.DISPLAY)
+            {
+                for (int i = 0; i < NbrEmmiter; i++)
                 {
                     GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
-                    Obj.GetComponent<Particule>().Stats = ParticuleStats;
+                    Obj.GetComponent<Particule>().Stats = ListParticuleForLoop[LoopOption.index];
+                    LoopOption.index += 1;
+                    if (LoopOption.index == ListParticuleForLoop.Count)
+                    {
+                        LoopOption.index = 0;
+                    }
+                    DelayEmmit = DelayEmmitSet;
                 }
-            
             }
-            DelayEmmit = DelayEmmitSet;
+            
         }
+        if(LoopOption.IsLooping)
+        {
+            if(LoopOption.Phase==LoopPhase.BEFORELOOP)
+            {
+                if(LoopOption.TimeBeforeLoop>0)
+                {
+                    LoopOption.TimeBeforeLoop -= Time.deltaTime;
+                }else
+                {
+                    LoopOption.Phase = LoopPhase.RECORD;
+                }
+            }else if(LoopOption.Phase == LoopPhase.RECORD)
+            {
+                if(LoopOption.LoopTime>0)
+                {
+                    LoopOption.LoopTime -= Time.deltaTime;
+                }else
+                {
+                    LoopOption.Phase = LoopPhase.DISPLAY;
+                }
+            }else if(LoopOption.Phase == LoopPhase.DISPLAY)
+            {
+
+            }
+        }
+
+        if(LoopOption.TimeBeforeLoop >= 0 && LoopOption.IsLooping)
+        {
+            LoopOption.TimeBeforeLoop -= Time.deltaTime;
+        }
+
         if(DelayEmmit>0)
         {
         DelayEmmit -= Time.deltaTime;
