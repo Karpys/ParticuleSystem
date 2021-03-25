@@ -157,13 +157,13 @@ MonoBehaviour:
     ColLerp: {r: 0.1981132, g: 0.75412595, b: 0.7924528, a: 1}
     SpeedColor: 1
     Direction: {x: 360, y: 0}
-    Speed: 1
-    Lifeline: 1
-    Acceleration: 0.01
-    Gravity: {x: 0, y: 0, z: 0}
+    Speed: {x: 0.5, y: 1, z: 0}
+    Lifeline: {x: 1, y: 1, z: 0}
+    Acceleration: {x: 0, y: 0, z: 0}
+    Gravity: {x: 2, y: 5, z: 0}
     sprite: {fileID: 21300000, guid: 64cfb1bf11a854c42a41e4b8d0ec1fc7, type: 3}
-    Scale: 0.2
-    degree: 0
+    Scale: {x: 0.2, y: 1, z: 0}
+    degree: -148
     Reverse: 0
   Parent: {fileID: 0}
   NbrEmmiter: 2

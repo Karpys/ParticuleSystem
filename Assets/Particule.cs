@@ -74,7 +74,6 @@ public struct Parti
     public Vector3 Gravity;
     public Sprite sprite;
     public Vector3 Scale;
-    [Range(-360.0f, 360.0f)]
     public float degree;
     public bool Reverse;
 }
