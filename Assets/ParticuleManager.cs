@@ -31,14 +31,14 @@ public class ParticuleManager : MonoBehaviour
                     if(Parent)
                     {
                         GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation,Parent.transform);
-                        ParticuleStats.degree = Mathf.Deg2Rad * Random.Range(ParticuleStats.Direction.x, ParticuleStats.Direction.y);
+                        ParticuleStats = BuildParti(ParticuleStats);
                         Obj.GetComponent<Particule>().Stats = ParticuleStats;
                     
                     }
                     else
                     {
                         GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
-                        ParticuleStats.degree = Mathf.Deg2Rad * Random.Range(ParticuleStats.Direction.x, ParticuleStats.Direction.y);
+                        ParticuleStats = BuildParti(ParticuleStats);
                         Obj.GetComponent<Particule>().Stats = ParticuleStats;
                         if(LoopOption.Phase == LoopPhase.RECORD)
                         {
@@ -100,5 +100,16 @@ public class ParticuleManager : MonoBehaviour
         {
         DelayEmmit -= Time.deltaTime;
         }
+    }
+
+
+    public Parti BuildParti(Parti parti)
+    {
+        parti.degree = Mathf.Deg2Rad * Random.Range(ParticuleStats.Direction.x, ParticuleStats.Direction.y);
+        parti.Speed.z = Random.Range(parti.Speed.x, parti.Speed.y);
+        parti.Scale.z = Random.Range(parti.Scale.x, parti.Scale.y);
+        parti.Lifeline.z = Random.Range(parti.Lifeline.x, parti.Lifeline.y);
+        parti.Acceleration.z = Random.Range(parti.Acceleration.x, parti.Acceleration.y);
+        return parti;
     }
 }

@@ -20,14 +20,14 @@ public class Particule : MonoBehaviour
     
     void Start()
     {
-        NbrRound = Stats.Lifeline / Time.fixedDeltaTime;
+        NbrRound = Stats.Lifeline.z / Time.fixedDeltaTime;
         GetComponent<SpriteRenderer>().sprite = Stats.sprite;
         GetComponent<SpriteRenderer>().color = Stats.Col;      
         Acc = new Vector2(Mathf.Cos(Stats.degree), Mathf.Sin(Stats.degree));
-        transform.localScale = new Vector3(Stats.Scale, Stats.Scale, Stats.Scale);
+        transform.localScale = new Vector3(Stats.Scale.z, Stats.Scale.z, Stats.Scale.z);
         if(Stats.Reverse)
         {
-            float MagnitudeSpeed = (Stats.Speed + Stats.Acceleration*NbrRound/2) * NbrRound;
+            float MagnitudeSpeed = (Stats.Speed.z + Stats.Acceleration.z*NbrRound/2) * NbrRound;
             transform.position += Acc * MagnitudeSpeed  *Time.fixedDeltaTime;
 
         }
@@ -37,7 +37,7 @@ public class Particule : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Stats.Lifeline<=0)
+        if(Stats.Lifeline.z<=0)
         {
             Destroy(gameObject);
         }
@@ -46,9 +46,9 @@ public class Particule : MonoBehaviour
     public void FixedUpdate()
     {
         Life += Time.fixedDeltaTime;
-        Stats.Lifeline -= Time.fixedDeltaTime;
-        Stats.Speed += Stats.Acceleration;
-        V = Acc * Stats.Speed + Stats.Gravity;
+        Stats.Lifeline.z -= Time.fixedDeltaTime;
+        Stats.Speed.z += Stats.Acceleration.z;
+        V = Acc * Stats.Speed.z + Stats.Gravity;
         V *= Time.fixedDeltaTime;
         Round += 1;
         Counter += V.magnitude;
@@ -68,12 +68,13 @@ public struct Parti
     public Color ColLerp;
     public float SpeedColor;
     public Vector2 Direction;
-    public float Speed;
-    public float Lifeline;
-    public float Acceleration;
+    public Vector3 Speed;
+    public Vector3 Lifeline;
+    public Vector3 Acceleration;
     public Vector3 Gravity;
     public Sprite sprite;
-    public float Scale;
+    public Vector3 Scale;
+    [Range(-360.0f, 360.0f)]
     public float degree;
     public bool Reverse;
 }
