@@ -30,14 +30,15 @@ public class ScreenShot : MonoBehaviour
         return string.Format(name.ToString() + ".png", Application.dataPath, width, height, "Screen");
     }
 
-    void Update()
+
+    void FixedUpdate()
     {
-        if(Go)
+        if (Go)
         {
 
-            if(RecordTime>0)
+            if (RecordTime > 0)
             {
-                if(ScreenDelay<0)
+                if (ScreenDelay < 0)
                 {
                     RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
                     camera.targetTexture = rt;
@@ -53,14 +54,14 @@ public class ScreenShot : MonoBehaviour
                     ScreenDelay += ScreenDelaySet;
                     Count += 1;
                 }
-                ScreenDelay -= Time.deltaTime;
-                RecordTime -= Time.deltaTime;
+                ScreenDelay -= Time.fixedDeltaTime;
+                RecordTime -= Time.fixedDeltaTime;
             }
         }
 
-        if(Save)
+        if (Save)
         {
-            var folder = Directory.CreateDirectory(Application.dataPath +"/../Test/"+AnimName+"/");
+            var folder = Directory.CreateDirectory(Application.dataPath + "/../Test/" + AnimName + "/");
             for (int i = 0; i < ListByte.Count; i++)
             {
                 /*string filename = ScreenShotName(resWidth, resHeight, i);*/
