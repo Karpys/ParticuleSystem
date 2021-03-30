@@ -171,7 +171,7 @@ MonoBehaviour:
   DelayEmmitSet: 0
   ListParticuleForLoop: []
   LoopOption:
-    IsLooping: 0
+    IsLooping: 1
     TimeBeforeLoop: 3
     LoopTime: 1
     Stack: 0
@@ -381,10 +381,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4, y: 4}
+  m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &1548964771
@@ -430,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1603293622}
   - component: {fileID: 1603293621}
+  - component: {fileID: 1603293623}
   m_Layer: 0
   m_Name: ScreenManager
   m_TagString: Untagged
@@ -474,3 +475,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1603293623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603293620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb51814e72b561b41b912fb47034fb5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 519420031}
+  resWidth: 1000
+  resHeight: 1000
+  ScreenPerSec: 30
+  RecordTime: 1
+  ScreenDelay: 0
+  Go: 0
+  Save: 0
+  DiviSpeed: 0
+  Count: 0
+  AnimName: Caca
