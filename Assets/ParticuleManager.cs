@@ -30,10 +30,14 @@ public class ParticuleManager : MonoBehaviour
                 {
                     if(Parent)
                     {
-                        GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation,Parent.transform);
+                        GameObject Obj = Instantiate(PrefabParticule, Parent.transform.position, Parent.transform.rotation,Parent.transform);
                         ParticuleStats = BuildParti(ParticuleStats);
                         Obj.GetComponent<Particule>().Stats = ParticuleStats;
-                    
+                        if (LoopOption.Phase == LoopPhase.RECORD)
+                        {
+                            ListParticuleForLoop.Add(ParticuleStats);
+                        }
+
                     }
                     else
                     {
@@ -53,14 +57,28 @@ public class ParticuleManager : MonoBehaviour
             {
                 for (int i = 0; i < NbrEmmiter; i++)
                 {
-                    GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
-                    Obj.GetComponent<Particule>().Stats = ListParticuleForLoop[LoopOption.index];
-                    LoopOption.index += 1;
-                    if (LoopOption.index == ListParticuleForLoop.Count)
+                    if(Parent)
                     {
-                        LoopOption.index = 0;
+                        GameObject Obj = Instantiate(PrefabParticule, Parent.transform.position, Parent.transform.rotation, Parent.transform);
+                        Obj.GetComponent<Particule>().Stats = ListParticuleForLoop[LoopOption.index];
+                        LoopOption.index += 1;
+                        if (LoopOption.index == ListParticuleForLoop.Count)
+                        {
+                            LoopOption.index = 0;
+                        }
+                        DelayEmmit = DelayEmmitSet;
                     }
-                    DelayEmmit = DelayEmmitSet;
+                    else
+                    {
+                        GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
+                        Obj.GetComponent<Particule>().Stats = ListParticuleForLoop[LoopOption.index];
+                        LoopOption.index += 1;
+                        if (LoopOption.index == ListParticuleForLoop.Count)
+                        {
+                            LoopOption.index = 0;
+                        }
+                        DelayEmmit = DelayEmmitSet;
+                    }
                 }
             }
             

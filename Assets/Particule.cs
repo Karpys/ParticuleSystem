@@ -15,11 +15,12 @@ public class Particule : MonoBehaviour
     public float Round;
     public Vector3 V;
     public float NbrRound;
-    
+    public float LifeBeforeDecay;
     
     
     void Start()
     {
+        LifeBeforeDecay = Stats.Lifeline.z;
         NbrRound = Stats.Lifeline.z / Time.fixedDeltaTime;
         GetComponent<SpriteRenderer>().sprite = Stats.sprite;
         GetComponent<SpriteRenderer>().color = Stats.Col;      
@@ -39,9 +40,23 @@ public class Particule : MonoBehaviour
     {
         if(Stats.Lifeline.z<=0)
         {
-            Destroy(gameObject);
-        }
+            if(Stats.DecayOption.IsDecay)
+            {
+                GetComponent<SpriteRenderer>().color = Color.Lerp(Stats.ColLerp, Stats.DecayOption.DecayCol, (Life- LifeBeforeDecay) / Stats.DecayOption.TimeDecay);
+                if((Life-LifeBeforeDecay)/Stats.DecayOption.TimeDecay>=1)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }else
+        {
+
         GetComponent<SpriteRenderer>().color = Color.Lerp(Stats.Col, Stats.ColLerp, Life/Stats.SpeedColor);
+        }
     }
     public void FixedUpdate()
     {
@@ -76,6 +91,7 @@ public struct Parti
     public Vector3 Scale;
     public float degree;
     public bool Reverse;
+    public Decay DecayOption;
 }
 [System.Serializable]
 public struct Loop
@@ -87,6 +103,14 @@ public struct Loop
     public bool Release;
     public LoopPhase Phase;
     public int index;
+}
+
+[System.Serializable]
+public struct Decay
+{
+    public bool IsDecay;
+    public Color DecayCol;
+    public float TimeDecay;
 }
 
 public enum LoopPhase
