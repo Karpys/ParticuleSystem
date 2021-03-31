@@ -18,6 +18,7 @@ public class ScreenShot : MonoBehaviour
     public int Count;
     private float ScreenDelaySet;
     public string AnimName;
+    public KeyCode Key;
     void Start()
     {
         GlobalVariable.SpeedDivi = DiviSpeed;
@@ -30,6 +31,14 @@ public class ScreenShot : MonoBehaviour
         return string.Format(name.ToString() + ".png", Application.dataPath, width, height, "Screen");
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(Key))
+        {
+            Go = true;
+        }
+        
+    }
 
     void FixedUpdate()
     {
