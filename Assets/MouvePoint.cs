@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MousePoint : MonoBehaviour
+public class MouvePoint : MonoBehaviour
 {
     // Start is called before the first frame update
     public List<Transform> ListTransform;

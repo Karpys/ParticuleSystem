@@ -7,6 +7,7 @@ public class RotateParent : MonoBehaviour
     // Start is called before the first frame update
     public float rotation;
     public float SpeedRotation;
+    public float Timeloop;
     void Start()
     {
         
@@ -15,7 +16,14 @@ public class RotateParent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rotation += SpeedRotation*Time.deltaTime;
+        
+    }
+
+    void FixedUpdate()
+    {
+        Timeloop = 360/SpeedRotation;
+        rotation += SpeedRotation * Time.fixedDeltaTime;
         transform.rotation = Quaternion.Euler(0, 0, rotation);
+
     }
 }

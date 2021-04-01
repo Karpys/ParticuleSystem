@@ -45,11 +45,19 @@ public class Particule : MonoBehaviour
                 GetComponent<SpriteRenderer>().color = Color.Lerp(Stats.ColLerp, Stats.DecayOption.DecayCol, (Life- LifeBeforeDecay) / Stats.DecayOption.TimeDecay);
                 if((Life-LifeBeforeDecay)/Stats.DecayOption.TimeDecay>=1)
                 {
+                    if (Stats.EmmitOption.Emmiting)
+                    {
+                        EmmitFunc();
+                    }
                     Destroy(gameObject);
                 }
             }
             else
             {
+                if (Stats.EmmitOption.Emmiting)
+                {
+                    EmmitFunc();
+                }
                 Destroy(gameObject);
             }
         }else
@@ -71,14 +79,26 @@ public class Particule : MonoBehaviour
         {
             V = -V;
         }
+        if(Stats.Scaling!=0)
+        {
+            Stats.Scale.z += Stats.Scaling * Time.fixedDeltaTime;
+            transform.localScale = new Vector3(Stats.Scale.z, Stats.Scale.z, Stats.Scale.z);
+        }
         transform.position = transform.position + V;
     }
 
+
+    public void EmmitFunc()
+    {
+        GameObject Em = Instantiate(Stats.EmmitOption.Emmiter, transform.position, transform.rotation);
+        Em.GetComponent<ParticuleManager>().Test = false;
+    }
 }
 
 [System.Serializable]
 public struct Parti
 {
+    public bool Burst;
     public Color Col;
     public Color ColLerp;
     public float SpeedColor;
@@ -89,10 +109,20 @@ public struct Parti
     public Vector3 Gravity;
     public Sprite sprite;
     public Vector3 Scale;
+    public float Scaling;
     public float degree;
     public bool Reverse;
     public Decay DecayOption;
+    public Emmit EmmitOption;
 }
+
+[System.Serializable]
+public struct Emmit
+{
+    public bool Emmiting;
+    public GameObject Emmiter;
+}
+
 [System.Serializable]
 public struct Loop
 {
@@ -104,6 +134,8 @@ public struct Loop
     public LoopPhase Phase;
     public int index;
 }
+
+
 
 [System.Serializable]
 public struct Decay
