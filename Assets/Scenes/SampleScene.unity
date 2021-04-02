@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &18545966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,9 +572,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabParticule: {fileID: 3341094658024172334, guid: c1850f6f1e810c340acaa5e3ce777d8a,
     type: 3}
+  Type: 1
   Zone:
     Min: {x: -2, y: -2, z: 0}
     Max: {x: 2, y: 2, z: 0}
+  CircleOption:
+    Radius: 2
+    Direction: {x: 0, y: 0, z: 0}
   ParticuleStats:
     Burst: 0
     Col: {r: 1, g: 1, b: 1, a: 1}
@@ -589,7 +593,7 @@ MonoBehaviour:
     Scale: {x: 0.2, y: 1, z: 0.35180295}
     Scaling: 0
     degree: 3.6070378
-    Reverse: 0
+    Reverse: 1
     DecayOption:
       IsDecay: 0
       DecayCol: {r: 0, g: 0, b: 0, a: 0}

@@ -6,7 +6,9 @@ public class FieldManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject PrefabParticule;
+    public FieldType Type;
     public FieldZone Zone;
+    public CircleZone CircleOption;
     public Parti ParticuleStats;
     public GameObject Parent;
     public int NbrEmmiter;
@@ -37,27 +39,27 @@ public class FieldManager : MonoBehaviour
                     {
                         if (Parent)
                         {
-                            Vector3 Position = new Vector3(Random.Range(Zone.Min.x, Zone.Max.x), Random.Range(Zone.Min.y, Zone.Max.y), 0);
-                            GameObject Obj = Instantiate(PrefabParticule, Parent.transform.position + Position, Parent.transform.rotation, Parent.transform);
+                            Vector3 Pos = BuildPos();
+                            GameObject Obj = Instantiate(PrefabParticule, Parent.transform.position + Pos, Parent.transform.rotation, Parent.transform);
                             ParticuleStats = BuildParti(ParticuleStats);
                             Obj.GetComponent<Particule>().Stats = ParticuleStats;
                             if (LoopOption.Phase == LoopPhase.RECORD)
                             {
                                 ListParticuleForLoop.Add(ParticuleStats);
-                                ListTransform.Add(Position);
+                                ListTransform.Add(Pos);
                             }
 
                         }
                         else
                         {
-                            Vector3 Position = new Vector3(Random.Range(Zone.Min.x, Zone.Max.x), Random.Range(Zone.Min.y, Zone.Max.y), 0);
-                            GameObject Obj = Instantiate(PrefabParticule, transform.position + Position, transform.rotation);
+                            Vector3 Pos = BuildPos();
+                            GameObject Obj = Instantiate(PrefabParticule, transform.position + Pos, transform.rotation);
                             ParticuleStats = BuildParti(ParticuleStats);
                             Obj.GetComponent<Particule>().Stats = ParticuleStats;
                             if (LoopOption.Phase == LoopPhase.RECORD)
                             {
                                 ListParticuleForLoop.Add(ParticuleStats);
-                                ListTransform.Add(Position);
+                                ListTransform.Add(Pos);
                             }
 
                         }
@@ -145,6 +147,24 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+    public Vector3 BuildPos()
+    {
+        Vector3 Position = new Vector3(0,0,0);
+        if(Type==FieldType.CIRCLE)
+        {
+            CircleOption.Direction.z = Random.Range(CircleOption.Direction.x, CircleOption.Direction.y);
+            CircleOption.Direction.z = CircleOption.Direction.z * Mathf.Deg2Rad;
+            Vector2 Magni = new Vector2(Mathf.Cos(CircleOption.Direction.z), Mathf.Sin(CircleOption.Direction.z));
+            float Radius = Random.Range(0,CircleOption.Radius);
+            Position = new Vector3(Magni.x * Radius, Magni.y * Radius, 0);
+        }
+        else if(Type==FieldType.SHAPE)
+        {
+            Position = new Vector3(Random.Range(Zone.Min.x, Zone.Max.x), Random.Range(Zone.Min.y, Zone.Max.y), 0);
+        }
+        return Position;
+    }
+
 
     public Parti BuildParti(Parti parti)
     {
@@ -167,4 +187,17 @@ public struct FieldZone
 {
     public Vector3 Min;
     public Vector3 Max;
+}
+
+[System.Serializable]
+public struct CircleZone
+{
+    public float Radius;
+    public Vector3 Direction;
+}
+
+public enum FieldType
+{
+    SHAPE,
+    CIRCLE
 }
