@@ -155,8 +155,8 @@ public class FieldManager : MonoBehaviour
             CircleOption.Direction.z = Random.Range(CircleOption.Direction.x, CircleOption.Direction.y);
             CircleOption.Direction.z = CircleOption.Direction.z * Mathf.Deg2Rad;
             Vector2 Magni = new Vector2(Mathf.Cos(CircleOption.Direction.z), Mathf.Sin(CircleOption.Direction.z));
-            float Radius = Random.Range(0,CircleOption.Radius);
-            Position = new Vector3(Magni.x * Radius, Magni.y * Radius, 0);
+            CircleOption.Radius.z = Random.Range(CircleOption.Radius.x, CircleOption.Radius.y);
+            Position = new Vector3(Magni.x * CircleOption.Radius.z, Magni.y * CircleOption.Radius.z, 0);
         }
         else if(Type==FieldType.SHAPE)
         {
@@ -168,7 +168,14 @@ public class FieldManager : MonoBehaviour
 
     public Parti BuildParti(Parti parti)
     {
-        parti.degree = Mathf.Deg2Rad * Random.Range(ParticuleStats.Direction.x, ParticuleStats.Direction.y);
+        if(CircleOption.FollowDirection)
+        {
+            parti.degree = CircleOption.Direction.z;
+        }
+        else
+        {
+            parti.degree = Mathf.Deg2Rad * Random.Range(ParticuleStats.Direction.x, ParticuleStats.Direction.y);
+        }
         parti.Speed.z = Random.Range(parti.Speed.x, parti.Speed.y);
         parti.Scale.z = Random.Range(parti.Scale.x, parti.Scale.y);
         parti.Lifeline.z = Random.Range(parti.Lifeline.x, parti.Lifeline.y);
@@ -192,8 +199,9 @@ public struct FieldZone
 [System.Serializable]
 public struct CircleZone
 {
-    public float Radius;
+    public Vector3 Radius;
     public Vector3 Direction;
+    public bool FollowDirection;
 }
 
 public enum FieldType

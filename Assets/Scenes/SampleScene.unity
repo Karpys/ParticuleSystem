@@ -572,7 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabParticule: {fileID: 3341094658024172334, guid: c1850f6f1e810c340acaa5e3ce777d8a,
     type: 3}
-  Type: 1
+  Type: 0
   Zone:
     Min: {x: -2, y: -2, z: 0}
     Max: {x: 2, y: 2, z: 0}
