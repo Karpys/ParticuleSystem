@@ -5,7 +5,7 @@ using UnityEngine;
 public class Particule : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    public PerfectScreen2 Screen2;
     public Parti Stats;
     public float Life;
     public Vector3 Acc;
@@ -38,6 +38,10 @@ public class Particule : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Stats.Screen.Screen==PerfectScreen2.StateScreen.GO)
+        {
+            NextStep();
+        }
         if(Stats.Lifeline.z<=0)
         {
             if(Stats.DecayOption.IsDecay)
@@ -66,11 +70,17 @@ public class Particule : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.Lerp(Stats.Col, Stats.ColLerp, Life/Stats.SpeedColor);
         }
     }
-    public void FixedUpdate()
+
+    public void NextStep()
     {
         Life += Time.fixedDeltaTime;
         Stats.Lifeline.z -= Time.fixedDeltaTime;
         Stats.Speed.z += Stats.Acceleration.z;
+        if (Stats.degreeAcc != 0)
+        {
+            Stats.degree += Stats.degreeAcc * Mathf.Deg2Rad * Time.fixedDeltaTime;
+            Acc = new Vector2(Mathf.Cos(Stats.degree), Mathf.Sin(Stats.degree));
+        }
         V = Acc * Stats.Speed.z + Stats.Gravity;
         V *= Time.fixedDeltaTime;
         Round += 1;
@@ -79,12 +89,16 @@ public class Particule : MonoBehaviour
         {
             V = -V;
         }
-        if(Stats.Scaling!=0)
+        if (Stats.Scaling != 0)
         {
             Stats.Scale.z += Stats.Scaling * Time.fixedDeltaTime;
             transform.localScale = new Vector3(Stats.Scale.z, Stats.Scale.z, Stats.Scale.z);
         }
         transform.position = transform.position + V;
+    }
+    public void FixedUpdate()
+    {
+        
     }
 
 
@@ -98,6 +112,7 @@ public class Particule : MonoBehaviour
 [System.Serializable]
 public struct Parti
 {
+    public PerfectScreen2 Screen;
     public bool Burst;
     public Color Col;
     public Color ColLerp;
@@ -111,6 +126,7 @@ public struct Parti
     public Vector3 Scale;
     public float Scaling;
     public float degree;
+    public float degreeAcc;
     public bool Reverse;
     public Decay DecayOption;
     public Emmit EmmitOption;

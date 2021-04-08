@@ -18,6 +18,7 @@ public class FieldManager : MonoBehaviour
     public List<Vector3> ListTransform;
     public Loop LoopOption;
     public bool Test;
+    public bool CanSpawn;
     
     private bool Activate = true;
     void Start()
@@ -28,6 +29,11 @@ public class FieldManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    public void Acti()
     {
         if (Activate)
         {

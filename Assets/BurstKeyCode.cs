@@ -18,10 +18,10 @@ public class BurstKeyCode : MonoBehaviour
     {
         if(Input.GetKey(Key))
         {
-            Particule.enabled = reverse;
+            Particule.CanSpawn = reverse;
         }else
         {
-            Particule.enabled = !reverse;
+            Particule.CanSpawn = !reverse;
         }
     }
 }

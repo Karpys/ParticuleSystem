@@ -15,6 +15,7 @@ public class ParticuleManager : MonoBehaviour
     public Loop LoopOption;
     public bool Test;
     private bool Activate=true;
+    public bool CanSpawn;
     void Start()
     {
         DelayEmmitSet = DelayEmmit;
@@ -24,17 +25,22 @@ public class ParticuleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Activate)
+        
+    }
+
+    public void Acti()
+    {
+        if (Activate )
         {
-            if(DelayEmmit<=0)
+            if (DelayEmmit <= 0 && CanSpawn)
             {
-                if(LoopOption.IsLooping==false || LoopOption.Phase==LoopPhase.BEFORELOOP || LoopOption.Phase==LoopPhase.RECORD)
+                if (LoopOption.IsLooping == false || LoopOption.Phase == LoopPhase.BEFORELOOP || LoopOption.Phase == LoopPhase.RECORD)
                 {
-                    for(int i=0;i< NbrEmmiter; i++)
+                    for (int i = 0; i < NbrEmmiter; i++)
                     {
-                        if(Parent)
+                        if (Parent)
                         {
-                            GameObject Obj = Instantiate(PrefabParticule, Parent.transform.position, Parent.transform.rotation,Parent.transform);
+                            GameObject Obj = Instantiate(PrefabParticule, Parent.transform.position, Parent.transform.rotation, Parent.transform);
                             ParticuleStats = BuildParti(ParticuleStats);
                             Obj.GetComponent<Particule>().Stats = ParticuleStats;
                             if (LoopOption.Phase == LoopPhase.RECORD)
@@ -48,20 +54,20 @@ public class ParticuleManager : MonoBehaviour
                             GameObject Obj = Instantiate(PrefabParticule, transform.position, transform.rotation);
                             ParticuleStats = BuildParti(ParticuleStats);
                             Obj.GetComponent<Particule>().Stats = ParticuleStats;
-                            if(LoopOption.Phase == LoopPhase.RECORD)
+                            if (LoopOption.Phase == LoopPhase.RECORD)
                             {
                                 ListParticuleForLoop.Add(ParticuleStats);
                             }
-                        
+
                         }
                     }
                     DelayEmmit = DelayEmmitSet;
                 }
-                else if(LoopOption.Phase==LoopPhase.DISPLAY)
+                else if (LoopOption.Phase == LoopPhase.DISPLAY)
                 {
                     for (int i = 0; i < NbrEmmiter; i++)
                     {
-                        if(Parent)
+                        if (Parent)
                         {
                             GameObject Obj = Instantiate(PrefabParticule, Parent.transform.position, Parent.transform.rotation, Parent.transform);
                             Obj.GetComponent<Particule>().Stats = ListParticuleForLoop[LoopOption.index];
@@ -85,48 +91,53 @@ public class ParticuleManager : MonoBehaviour
                         }
                     }
                 }
-            
-            }
-        if(LoopOption.IsLooping)
-        {
-            if(LoopOption.Phase==LoopPhase.BEFORELOOP)
-            {
-                if(LoopOption.TimeBeforeLoop>0)
-                {
-                    LoopOption.TimeBeforeLoop -= Time.deltaTime;
-                }else
-                {
-                    LoopOption.Phase = LoopPhase.RECORD;
-                }
-            }else if(LoopOption.Phase == LoopPhase.RECORD)
-            {
-                if(LoopOption.LoopTime>0)
-                {
-                    LoopOption.LoopTime -= Time.deltaTime;
-                }else
-                {
-                    LoopOption.Phase = LoopPhase.DISPLAY;
-                }
-            }else if(LoopOption.Phase == LoopPhase.DISPLAY)
-            {
 
             }
-        }
-
-        if(LoopOption.TimeBeforeLoop >= 0 && LoopOption.IsLooping)
-        {
-            LoopOption.TimeBeforeLoop -= Time.deltaTime;
-        }
-
-        if(DelayEmmit>0)
-        {
-        DelayEmmit -= Time.deltaTime;
-        }
-        }else
-        {
-            if(!Test)
+            if (LoopOption.IsLooping)
             {
-            Destroy(gameObject);
+                if (LoopOption.Phase == LoopPhase.BEFORELOOP)
+                {
+                    if (LoopOption.TimeBeforeLoop > 0)
+                    {
+                        LoopOption.TimeBeforeLoop -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        LoopOption.Phase = LoopPhase.RECORD;
+                    }
+                }
+                else if (LoopOption.Phase == LoopPhase.RECORD)
+                {
+                    if (LoopOption.LoopTime > 0)
+                    {
+                        LoopOption.LoopTime -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        LoopOption.Phase = LoopPhase.DISPLAY;
+                    }
+                }
+                else if (LoopOption.Phase == LoopPhase.DISPLAY)
+                {
+
+                }
+            }
+
+            if (LoopOption.TimeBeforeLoop >= 0 && LoopOption.IsLooping)
+            {
+                LoopOption.TimeBeforeLoop -= Time.deltaTime;
+            }
+
+            if (DelayEmmit > 0)
+            {
+                DelayEmmit -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (!Test)
+            {
+                Destroy(gameObject);
             }
         }
     }
