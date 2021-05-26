@@ -24,7 +24,14 @@ public class Particule : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = Stats.sprite;
         GetComponent<SpriteRenderer>().color = Stats.Col;      
         Acc = new Vector2(Mathf.Cos(Stats.degree), Mathf.Sin(Stats.degree));
-        transform.localScale = new Vector3(Stats.ScaleX.z, Stats.ScaleY.z, Stats.ScaleX.z);
+        if(Stats.ScaleEqualsBaseOnScaleXVector)
+        {
+            transform.localScale = new Vector3(Stats.ScaleX.z, Stats.ScaleX.z, Stats.ScaleX.z);
+        }
+        else
+        {
+            transform.localScale = new Vector3(Stats.ScaleX.z, Stats.ScaleY.z, Stats.ScaleX.z);
+        }
         if(Stats.Reverse)
         {
             float MagnitudeSpeed = (Stats.Speed.z + Stats.Acceleration.z*NbrRound/2) * NbrRound;
@@ -126,6 +133,7 @@ public struct Parti
     public Sprite sprite;
     public Vector3 ScaleX;
     public Vector3 ScaleY;
+    public bool ScaleEqualsBaseOnScaleXVector;
     public float ScalingX;
     public float ScalingY;
     public float degree;

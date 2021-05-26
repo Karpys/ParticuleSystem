@@ -167,10 +167,11 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 64cfb1bf11a854c42a41e4b8d0ec1fc7, type: 3}
     ScaleX: {x: 1, y: 1, z: 0}
     ScaleY: {x: 1, y: 1, z: 0}
+    ScaleEqualsBaseOnScaleXVector: 0
     ScalingX: 0
     ScalingY: 0
-    degree: 0.83838874
-    degreeAcc: 360
+    degree: 0
+    degreeAcc: 0
     Reverse: 0
     DecayOption:
       IsDecay: 0
@@ -719,6 +720,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: f445841ff7fdc0347931d462d9ed9b94, type: 3}
     ScaleX: {x: 1, y: 1, z: 0}
     ScaleY: {x: 0.2, y: 0.2, z: 0}
+    ScaleEqualsBaseOnScaleXVector: 0
     ScalingX: 0
     ScalingY: 0
     degree: 1.259836
