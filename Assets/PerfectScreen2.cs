@@ -57,6 +57,7 @@ public class PerfectScreen2 : MonoBehaviour
                 /*string filename = ScreenShotName(resWidth, resHeight, i);*/
                 System.IO.File.WriteAllBytes(Application.dataPath + "/../Test/" + AnimName + "/" + i.ToString() + ".png", ListByte[i]);
             }
+            smooth = true;
             NombreFrame -= 1;
         }
     }

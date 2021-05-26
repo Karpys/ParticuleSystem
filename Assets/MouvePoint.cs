@@ -10,6 +10,9 @@ public class MouvePoint : MonoBehaviour
     public bool loop;
     public float life;
     public int index;
+    public bool PingPong;
+    public bool Ping;
+    
     void Start()
     {
         transform.position = ListTransform[0].position;
@@ -19,17 +22,43 @@ public class MouvePoint : MonoBehaviour
     void Update()
     {
         life += Time.deltaTime;
-        if(Curve.Evaluate(life)!=1)
+        if(!Ping)
         {
-            transform.position = Vector3.Lerp(ListTransform[index].position, ListTransform[index + 1].position, Curve.Evaluate(life));
-        }else if(index<ListTransform.Count-2)
+            if(Curve.Evaluate(life)!=1)
+            {
+                transform.position = Vector3.Lerp(ListTransform[index].position, ListTransform[index + 1].position, Curve.Evaluate(life));
+            }else if(index<ListTransform.Count-2)
+            {
+                index += 1;
+                life = 0;
+            }else if(loop)
+            {
+                index = 0;
+                life = 0;
+                
+            }else if(PingPong)
+            {
+                life = 0;
+                Ping = !Ping;
+                index = ListTransform.Count - 1;
+            }
+        }else
         {
-            index += 1;
-            life = 0;
-        }else if(loop)
-        {
-            index = 0;
-            life = 0;
+            if (Curve.Evaluate(life) != 1)
+            {
+                transform.position = Vector3.Lerp(ListTransform[index].position, ListTransform[index - 1].position, Curve.Evaluate(life));
+            }
+            else if (index > 1)
+            {
+                index -= 1;
+                life = 0;
+            }
+            else
+            {
+                index = 0;
+                life = 0;
+                Ping = !Ping;
+            }
         }
     }
 }

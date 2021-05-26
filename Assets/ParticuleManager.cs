@@ -137,6 +137,7 @@ public class ParticuleManager : MonoBehaviour
         {
             if (!Test)
             {
+                ParticuleStats.Screen.ListParti.Remove(this);
                 Destroy(gameObject);
             }
         }
@@ -147,7 +148,8 @@ public class ParticuleManager : MonoBehaviour
     {
         parti.degree = Mathf.Deg2Rad * Random.Range(ParticuleStats.Direction.x, ParticuleStats.Direction.y);
         parti.Speed.z = Random.Range(parti.Speed.x, parti.Speed.y);
-        parti.Scale.z = Random.Range(parti.Scale.x, parti.Scale.y);
+        parti.ScaleX.z = Random.Range(parti.ScaleX.x, parti.ScaleX.y);
+        parti.ScaleY.z = Random.Range(parti.ScaleY.x, parti.ScaleY.y);
         parti.Lifeline.z = Random.Range(parti.Lifeline.x, parti.Lifeline.y);
         parti.Acceleration.z = Random.Range(parti.Acceleration.x, parti.Acceleration.y);
         if(parti.Burst)

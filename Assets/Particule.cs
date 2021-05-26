@@ -5,7 +5,6 @@ using UnityEngine;
 public class Particule : MonoBehaviour
 {
     // Start is called before the first frame update
-    public PerfectScreen2 Screen2;
     public Parti Stats;
     public float Life;
     public Vector3 Acc;
@@ -25,7 +24,7 @@ public class Particule : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = Stats.sprite;
         GetComponent<SpriteRenderer>().color = Stats.Col;      
         Acc = new Vector2(Mathf.Cos(Stats.degree), Mathf.Sin(Stats.degree));
-        transform.localScale = new Vector3(Stats.Scale.z, Stats.Scale.z, Stats.Scale.z);
+        transform.localScale = new Vector3(Stats.ScaleX.z, Stats.ScaleY.z, Stats.ScaleX.z);
         if(Stats.Reverse)
         {
             float MagnitudeSpeed = (Stats.Speed.z + Stats.Acceleration.z*NbrRound/2) * NbrRound;
@@ -89,10 +88,11 @@ public class Particule : MonoBehaviour
         {
             V = -V;
         }
-        if (Stats.Scaling != 0)
+        if (Stats.ScalingX != 0 || Stats.ScalingY!=0)
         {
-            Stats.Scale.z += Stats.Scaling * Time.fixedDeltaTime;
-            transform.localScale = new Vector3(Stats.Scale.z, Stats.Scale.z, Stats.Scale.z);
+            Stats.ScaleX.z += Stats.ScalingX * Time.fixedDeltaTime;
+            Stats.ScaleY.z += Stats.ScalingY * Time.fixedDeltaTime;
+            transform.localScale = new Vector3(Stats.ScaleX.z, Stats.ScaleY.z, Stats.ScaleX.z);
         }
         transform.position = transform.position + V;
     }
@@ -106,6 +106,7 @@ public class Particule : MonoBehaviour
     {
         GameObject Em = Instantiate(Stats.EmmitOption.Emmiter, transform.position, transform.rotation);
         Em.GetComponent<ParticuleManager>().Test = false;
+        Stats.Screen.ListParti.Add(Em.GetComponent<ParticuleManager>());
     }
 }
 
@@ -123,8 +124,10 @@ public struct Parti
     public Vector3 Acceleration;
     public Vector3 Gravity;
     public Sprite sprite;
-    public Vector3 Scale;
-    public float Scaling;
+    public Vector3 ScaleX;
+    public Vector3 ScaleY;
+    public float ScalingX;
+    public float ScalingY;
     public float degree;
     public float degreeAcc;
     public bool Reverse;
