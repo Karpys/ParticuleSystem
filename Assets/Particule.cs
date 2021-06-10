@@ -87,6 +87,10 @@ public class Particule : MonoBehaviour
             Stats.degree += Stats.degreeAcc * Mathf.Deg2Rad * Time.fixedDeltaTime;
             Acc = new Vector2(Mathf.Cos(Stats.degree), Mathf.Sin(Stats.degree));
         }
+        if(Stats.ClampOption.Clamp)
+        {
+            Stats.Speed.z = Mathf.Clamp(Stats.Speed.z, Stats.ClampOption.ClampingAt.x, Stats.ClampOption.ClampingAt.y);
+        }
         V = Acc * Stats.Speed.z + Stats.Gravity;
         V *= Time.fixedDeltaTime;
         Round += 1;
@@ -94,6 +98,17 @@ public class Particule : MonoBehaviour
         if (Stats.Reverse)
         {
             V = -V;
+        }
+        if(Stats.StopOption.IsStoping)
+        {
+            if(Stats.StopOption.StopingTime>0)
+            {
+                Stats.StopOption.StopingTime -= Time.fixedDeltaTime;
+                if(Stats.StopOption.StopingTime<=0)
+                {
+                    Stats.Speed.z = Stats.StopOption.SpeedToApplied;
+                }
+            }
         }
         if (Stats.ScalingX != 0 || Stats.ScalingY!=0)
         {
@@ -130,6 +145,8 @@ public struct Parti
     public Vector3 Lifeline;
     public Vector3 Acceleration;
     public Vector3 Gravity;
+    public ClampOption ClampOption;
+    public StopOption StopOption;
     public Sprite sprite;
     public Vector3 ScaleX;
     public Vector3 ScaleY;
@@ -148,6 +165,21 @@ public struct Emmit
 {
     public bool Emmiting;
     public GameObject Emmiter;
+}
+
+[System.Serializable]
+public struct ClampOption
+{
+    public bool Clamp;
+    public Vector2 ClampingAt;
+}
+
+[System.Serializable]
+public struct StopOption
+{
+    public bool IsStoping;
+    public float StopingTime;
+    public float SpeedToApplied;
 }
 
 [System.Serializable]

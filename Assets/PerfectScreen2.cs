@@ -20,6 +20,7 @@ public class PerfectScreen2 : MonoBehaviour
     public int Count;
     public string AnimName;
     public KeyCode Key;
+    public int CounterGoMax;
     void Start()
     {
         
@@ -94,7 +95,7 @@ public class PerfectScreen2 : MonoBehaviour
         }else if(Screen==StateScreen.Wait)
         {
                 CounterGo += 1;
-                if(CounterGo==5)
+                if(CounterGo>= CounterGoMax)
                 {
                     CounterGo = 0;
                     Screen = StateScreen.GO;
